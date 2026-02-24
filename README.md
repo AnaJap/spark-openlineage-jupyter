@@ -6,7 +6,7 @@ This repository provides a Dockerized Spark notebook environment with OpenLineag
 
 - `Dockerfile`: Jupyter all-spark image (`spark-3.5.3`) with OpenLineage Spark listener JAR installed.
 - `spark-defaults.conf`: Spark listener + HTTP transport configuration for OpenLineage.
-- `notebooks/OpenLineage_Spark_Demo.ipynb`: demo notebook to generate lineage events.
+- `notebooks/openlineage_spark_demo.ipynb`: demo notebook to generate lineage events.
 - `docker-compose.yml`: local stack with PostgreSQL, Marquez API, Marquez Web UI, and notebook container.
 
 ## Prerequisites
