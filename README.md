@@ -46,6 +46,11 @@ Services:
 - Marquez Web UI: `http://localhost:3000`
 - Marquez API / OpenLineage endpoint: `http://localhost:5000`
 
+Notebook volume mount in compose mode:
+
+- `./notebooks` on your host is mounted to `/home/jovyan/work/notebooks` in the container.
+- Changes to notebooks persist on your host and are visible immediately in Jupyter.
+
 To stop:
 
 ```bash

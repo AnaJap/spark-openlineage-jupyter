@@ -20,11 +20,8 @@ RUN curl -fsSL \
 # Spark defaults (enables the listener + sets HTTP transport)
 COPY spark-defaults.conf ${SPARK_HOME}/conf/spark-defaults.conf
 
-# Example notebook
-COPY notebooks/ /home/jovyan/work/notebooks/
-
 # Permissions for jovyan user
-RUN chown -R ${NB_UID}:${NB_GID} ${SPARK_HOME}/conf/spark-defaults.conf /home/jovyan/work/notebooks
+RUN chown ${NB_UID}:${NB_GID} ${SPARK_HOME}/conf/spark-defaults.conf
 
 USER ${NB_UID}
 
