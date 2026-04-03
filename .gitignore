@@ -1,1 +1,3 @@
 .ipynb_checkpoints/
+notebooks/spark-warehouse/
+notebooks/2015_flights.parquet

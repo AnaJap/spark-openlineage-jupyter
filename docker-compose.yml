@@ -32,6 +32,23 @@ services:
       POSTGRES_USER: marquez
       POSTGRES_PASSWORD: marquez
 
+  oracle:
+    image: gvenzl/oracle-free:23.26.1-slim
+    environment:
+      ORACLE_PASSWORD: SparkSys123!
+      APP_USER: SPARK_APP
+      APP_USER_PASSWORD: SparkApp123!
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
   web:
     image: marquezproject/marquez-web:latest
     depends_on:
@@ -46,10 +63,23 @@ services:
   notebook:
     build: .
     depends_on:
-      - marquez
+      marquez:
+        condition: service_started
+      oracle:
+        condition: service_healthy
     ports:
       - "8888:8888"
     volumes:
       - ./notebooks:/home/jovyan/work/notebooks
     environment:
       JUPYTER_TOKEN: token
+      OPENLINEAGE_CONFIG: /home/jovyan/work/notebooks/openlineage.yml
+      ORACLE_HOST: oracle
+      ORACLE_PORT: 1521
+      ORACLE_SERVICE: FREEPDB1
+      ORACLE_USER: SPARK_APP
+      ORACLE_PASSWORD: SparkApp123!
+      ORACLE_JDBC_URL: jdbc:oracle:thin:@oracle:1521/FREEPDB1
+
+volumes:
+  oracle-data:
